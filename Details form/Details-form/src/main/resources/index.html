@@ -1,0 +1,225 @@
+<html>
+    <head>
+        <title>Details Form</title>
+        <link rel="stylesheet" href="css/style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <style>
+            .contact
+{ /* contact css*/
+   width:50%;
+    margin-left: auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    font-size: 20px;
+    background-color: lightskyblue;
+    border: 1px solid black;
+    padding: 5px;
+    z-index: 100;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    
+}
+.heading
+{ /* heading css*/
+    font-size: 30px;
+    text-align: center;
+}
+.form-grouper
+{  /* form  css*/
+  margin-top: 10px;
+}
+
+label
+{  /* label css*/
+  font-size: 22px;
+  line-height: 1em;
+  
+}
+.form-control
+{  /* form-control css*/
+  font-size: 1.3em;
+  color: #080808;
+}
+.submit
+{  /* dubmit button  css*/
+    font-size: 1.1em;
+    margin-top: 15px;
+    width:30%;
+    color: black;
+    left:35%;
+    position: absolute;
+    background-color: lightsalmon;
+}
+.search
+{  /* search button  css*/
+    font-size: 1.1em;
+    margin-top: 15px;
+    width:30%;
+    color: black;
+    position: absolute;
+    left:35%;
+    background-color: lightgoldenrodyellow;
+}
+#end
+{
+  display: none;
+}
+#displaytable
+{  /* table color */
+  background-color:white;
+}
+.p-thanks
+{/* Thanks message terminated code due to non- requirment of question*/
+    position: relative;
+    animation-name: changebg;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+    background-color: rgb(255, 102, 102);
+    border-radius: 5px;
+}
+.thanks
+{ /* Thanks message terminated code due to non- requirment of question*/
+    font-size: 25px;
+    font-family: cursive;
+    font-weight: bold;
+}
+
+        </style>
+        
+    </head>
+    <script>
+        function fun()
+{
+    //data variables
+    var name=document.getElementById("name");
+    var email=document.getElementById("email");
+    var contact=document.getElementById("mobile");
+//email validation
+    var atpos = email.value.indexOf("@");
+    var dotpos = email.value.lastIndexOf(".");
+
+    if(name.value=="" || email.value=="" || contact.value=="")
+    {
+        window.alert("Enter the  required field");
+    }
+    else if(name.value.length<3)
+    {
+        window.alert("Your name must be 3 characters long");
+    }
+    else if(contact.value.length!=10)
+    {
+        window.alert("Enter valid mobile number");
+    }
+    else if(atpos < 1 || ( dotpos - atpos < 2 ))
+    {
+        window.alert("Enter valid email-id");
+    }
+    else
+    {//data sent for display below 
+        var disp=document.getElementById("end");
+        disp.style.display="block";
+        var table = document.getElementById("displaytable");
+        var count=0;
+    for (let row of table.rows) 
+    {
+        for(let cell of row.cells) 
+        {
+        if(cell.innerText == email.value || cell.innerText==contact.value)
+        count=1;
+        }
+    }
+    if(count==1)
+    alert("User already exists");
+    else
+    {//data row created
+    var row = table.insertRow(table.length);
+    row.setAttribute("class","table-success");
+    row.setAttribute("id","delRow")    
+
+    var field1 = row.insertCell(0);
+    var field2 = row.insertCell(1);
+    var filed3 = row.insertCell(2);
+    var filed4 = row.insertCell(3);
+
+    field1.innerHTML = name.value;
+    field2.innerHTML = email.value;
+    filed3.innerHTML=contact.value;
+    filed4.innerHTML="<a href='#' onclick='del(delRow)'>Delete</a>";
+
+    name.value='';
+    email.value='';
+    contact.value='';
+    }
+}
+}
+//delete code  for entries
+function del(delRow)
+{
+    var table = document.getElementById("displaytable");
+    delRow.parentNode.removeChild(delRow);
+
+}
+    </script>
+    <body>
+        <div class="contact">
+            <!--Detaisl Form-->
+            <p class="heading">Details Form</p>
+            <form method="GET">
+                <div class="col-md-12 ">
+                    <!--form-grouper-->
+                    <div class="form-grouper">
+                        <!--Name-->
+                      <label>Name: </label>
+                      <input type="text" class="form-control" id="name" placeholder=" Enter Name" required>
+                    </div>	
+                    <div class="form-grouper">
+                        <!--Mobile.No-->
+                      <label>Mobile No.</label>
+                      <input type="tel" class="form-control" id="mobile" placeholder=" Enter 10-digit mobile no." required>
+                    </div>
+                    <div class="form-grouper">
+                        <!--Email-Address-->
+                        
+                        <label>Email Address</label>
+                        <input type="email" class="form-control" id="email" placeholder=" Enter Email id" required>
+                      </div>
+                    
+                     <button type="button" onclick="fun()" class="submit">SUBMIT</button>
+                    </div>
+                </form>
+                   <br><br> 
+                   <input type="search" class="form-control" id="email" placeholder=" Enter the name here" required>
+                   <button type="button" onclick="//fun()" class="search">Search</button><br><br>
+
+
+                <div id="end">
+                    <br>
+                          <div class="p-thanks"><p class="thanks"></p></div>
+                        <div class="container">
+                            <center> <h1 style="color:white">User Details</h1>
+                                <p class="page">----------------</p></center>
+                                <div class="table-responsive-sm">    
+                            <table class="table table-bordered" id="displaytable" >
+                                <tr>
+                                    <th>Name</th>
+                                    <th>E-mail</th>
+                                    <th>Mobile No.</th>
+                                </tr>
+                            </table>
+                            </div>
+                        </div>
+                      </div>
+        </div>
+        <scrip src="js/index.js"></scrip>
+    </body>
+</html>
